@@ -1,19 +1,59 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import {createDrawerNavigator} from "@react-navigation/drawer";
+import stackNavigator from "./components/startScreen";
+import globalSummaryScreen from "./screens/screen3";
+import allCountryStatsNavigator from "./components/allCountryStatsNavigator";
+import {Ionicons} from '@expo/vector-icons';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+
+const Drawer = createDrawerNavigator();
+const MyDrawer = () =>{
+  return(
+   <Drawer.Navigator
+   drawerContentOptions={{
+    activeTintColor: 'green',
+    itemStyle: { marginVertical: 20 }
+  }}
+  drawerStyle={{
+    backgroundColor: 'white',
+    paddingTop:40
+  }}
+   >
+    
+       <Drawer.Screen 
+           name = "Countries" 
+           component={stackNavigator}
+           options={{
+               drawerIcon:()=> <Ionicons name="md-flag" size={30} color="black" />
+           }}
+       />
+       <Drawer.Screen 
+           name = "Global Summary" 
+           component={globalSummaryScreen}
+           options={{
+               drawerIcon:()=> <Ionicons name="md-stats" size={30} color="black" />
+           }}
+          />
+       <Drawer.Screen 
+           name = "All Country Stats" 
+           component={allCountryStatsNavigator}
+           options={{
+               drawerIcon:()=> <Ionicons name="md-globe" size={24} color="black" />
+           }}
+           />
+   </Drawer.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function App() {
+  return (
+    <NavigationContainer  
+    >
+      <MyDrawer/>
+      
+    </NavigationContainer>
+  );
+}
+
+export default App;
